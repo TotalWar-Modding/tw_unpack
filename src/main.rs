@@ -22,10 +22,11 @@ fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf) {
     let mut i = 0;
 
     for item in index.into_iter() {
-        let target_path = output_directory.join(&Path::new(&item.name).parent().unwrap());
+        let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
+        let target_path = output_directory.join(&item.name);
         println!("Extracting {:?} to {:?}", item, &target_path);
-        std::fs::create_dir_all(target_path).unwrap();
-        let mut file = OpenOptions::new().write(true).create(true).open(output_directory.join(&item.name)).unwrap();
+        std::fs::create_dir_all(target_directory).unwrap();
+        let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
         file.write(&pack.raw_data[(begin + i) as usize..(begin + i + item.item_length) as usize]).unwrap();
         i += item.item_length;
     }
