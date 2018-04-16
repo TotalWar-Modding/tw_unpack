@@ -11,7 +11,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "twa_pack_lib"
 version = "0.1.0"
-source = "git+https://github.com/TotalWarArena-Modding/twa_pack_lib#89da4b1abbf977af7f194c209362599e022eefb0"
+source = "git+https://github.com/TotalWarArena-Modding/twa_pack_lib#f3fa6b958e29f0c55ee11e34a468aff394c927fa"
 dependencies = [
  "byteorder 1.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
