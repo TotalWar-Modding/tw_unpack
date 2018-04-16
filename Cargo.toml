@@ -1,0 +1,8 @@
+[package]
+name = "twa_unpack"
+version = "0.1.0"
+authors = ["Benedikt Constantin Radtke <benediktradtke@mailbox.tu-berlin.de>"]
+
+[dependencies]
+twa_pack_lib = { git = "https://github.com/TotalWarArena-Modding/twa_pack_lib" }
+getopts = "0.2"
