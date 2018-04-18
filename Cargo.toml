@@ -6,3 +6,4 @@ authors = ["Benedikt Constantin Radtke <benediktradtke@mailbox.tu-berlin.de>"]
 [dependencies]
 twa_pack_lib = { git = "https://github.com/TotalWarArena-Modding/twa_pack_lib" }
 getopts = "0.2"
+glob = "0.2"

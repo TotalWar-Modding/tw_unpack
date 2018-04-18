@@ -1,5 +1,6 @@
-extern crate twa_pack_lib;
 extern crate getopts;
+extern crate glob;
+extern crate twa_pack_lib;
 
 use std::env;
 use std::fs::File;
@@ -10,6 +11,7 @@ use std::path::Path;
 use std::path::PathBuf;
 
 use getopts::Options;
+use glob::glob;
 
 fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf) {
     let mut buf = vec!();
@@ -24,7 +26,7 @@ fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf) {
     for item in index.into_iter() {
         let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
         let target_path = output_directory.join(&item.name);
-        println!("Extracting {:?} to {:?}", item, &target_path);
+        println!("{}", &item.name);
         std::fs::create_dir_all(target_directory).unwrap();
         let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
         file.write(&pack.raw_data[(begin + i) as usize..(begin + i + item.item_length) as usize]).unwrap();
@@ -60,14 +62,6 @@ fn main() {
         return;
     };
 
-
-    let mut pack_filename = match File::open(pack_filename_param) {
-        Ok(f) => f,
-        Err(e) => {
-            println!("could not open input file ({})", e);
-            return;
-        }
-    };
     let output_directory = match output_directory_param {
         Some(p) => {
             let path = PathBuf::from(&p);
@@ -88,5 +82,27 @@ fn main() {
             }
         }
     };
-    unpack_pack(&mut pack_filename, &output_directory);
+
+    match glob(&pack_filename_param) {
+        Ok(glob) => {
+            for entry in glob {
+                match entry {
+                    Ok(path) => {
+                        match File::open(&path) {
+                            Ok(mut f) => {
+                                println!("unpacking {}", &path.display());
+                                unpack_pack(&mut f, &output_directory)
+                            },
+                            Err(e) => panic!("fould not open file {} ({})", &path.display(), e)
+                        }
+                    }
+                    Err(e) => println!("failed to handle glob entry ({})", e),
+                }
+            }
+        },
+        Err(e) => {
+            println!("invalid glob pattern ({})", e);
+            return;
+        }
+    }
 }
