@@ -13,6 +13,8 @@ use std::path::PathBuf;
 use getopts::Options;
 use glob::glob;
 
+static VERSION: &str = "0.1.3";
+
 struct Config {
     verbose: bool
 }
@@ -41,7 +43,7 @@ fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf, config: &Co
 }
 
 fn print_usage(program: &str, opts: Options) {
-    let brief = format!("Usage: {} FILE", program);
+    let brief = format!("twa_unpack version {}\nUsage: {} FILE", VERSION, program);
     println!("{}", opts.usage(&brief));
 }
 
