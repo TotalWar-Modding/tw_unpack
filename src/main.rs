@@ -13,7 +13,11 @@ use std::path::PathBuf;
 use getopts::Options;
 use glob::glob;
 
-fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf) {
+struct Config {
+    verbose: bool
+}
+
+fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf, config: &Config) {
     let mut buf = vec!();
     pack_filename.read_to_end(&mut buf).unwrap();
     let pack = twa_pack_lib::parse_pack(buf);
@@ -26,7 +30,9 @@ fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf) {
     for item in index.into_iter() {
         let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
         let target_path = output_directory.join(&item.name);
-        println!("{}", &item.name);
+        if config.verbose {
+            println!("{}", &item.name);
+        }
         std::fs::create_dir_all(target_directory).unwrap();
         let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
         file.write(&pack.raw_data[(begin + i) as usize..(begin + i + item.item_length) as usize]).unwrap();
@@ -62,6 +68,12 @@ fn main() {
         return;
     };
 
+    let verbose = if matches.opt_present("v") {
+        true
+    } else {
+        false
+    };
+
     let output_directory = match output_directory_param {
         Some(p) => {
             let path = PathBuf::from(&p);
@@ -83,6 +95,10 @@ fn main() {
         }
     };
 
+    let config = Config {
+        verbose: verbose
+    };
+
     match glob(&pack_filename_param) {
         Ok(glob) => {
             for entry in glob {
@@ -91,7 +107,7 @@ fn main() {
                         match File::open(&path) {
                             Ok(mut f) => {
                                 println!("unpacking {}", &path.display());
-                                unpack_pack(&mut f, &output_directory)
+                                unpack_pack(&mut f, &output_directory, &config)
                             },
                             Err(e) => panic!("fould not open file {} ({})", &path.display(), e)
                         }
