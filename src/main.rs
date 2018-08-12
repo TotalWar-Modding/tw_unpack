@@ -23,22 +23,16 @@ fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf, config: &Co
     let mut buf = vec!();
     pack_filename.read_to_end(&mut buf).unwrap();
     let pack = twa_pack_lib::parse_pack(buf);
-    let header = pack.get_header();
-    let index = pack.get_index();
 
-    let begin = header.get_header_size() + header.get_payload_offset();
-    let mut i = 0;
-
-    for item in index.into_iter() {
+    for item in pack.into_iter() {
         let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
         let target_path = output_directory.join(&item.name);
-        if config.verbose {
-            println!("{}", &item.name);
-        }
         std::fs::create_dir_all(target_directory).unwrap();
         let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
-        file.write(&pack.raw_data[(begin + i) as usize..(begin + i + item.item_length) as usize]).unwrap();
-        i += item.item_length;
+        if config.verbose {
+            println!("{}", &item);
+        }
+        file.write(item.content).unwrap();
     }
 }
 
