@@ -16,22 +16,22 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "twa_pack_lib"
 version = "0.1.0"
-source = "git+https://github.com/TotalWarArena-Modding/twa_pack_lib#c54937653a2ef268779d796ac66e4a75a5c98981"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 dependencies = [
  "byteorder 1.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "twa_unpack"
-version = "0.1.0"
+version = "0.1.4"
 dependencies = [
  "getopts 0.2.17 (registry+https://github.com/rust-lang/crates.io-index)",
  "glob 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)",
- "twa_pack_lib 0.1.0 (git+https://github.com/TotalWarArena-Modding/twa_pack_lib)",
+ "twa_pack_lib 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [metadata]
 "checksum byteorder 1.2.2 (registry+https://github.com/rust-lang/crates.io-index)" = "73b5bdfe7ee3ad0b99c9801d58807a9dbc9e09196365b0203853b99889ab3c87"
 "checksum getopts 0.2.17 (registry+https://github.com/rust-lang/crates.io-index)" = "b900c08c1939860ce8b54dc6a89e26e00c04c380fd0e09796799bd7f12861e05"
 "checksum glob 0.2.11 (registry+https://github.com/rust-lang/crates.io-index)" = "8be18de09a56b60ed0edf84bc9df007e30040691af7acd1c41874faac5895bfb"
-"checksum twa_pack_lib 0.1.0 (git+https://github.com/TotalWarArena-Modding/twa_pack_lib)" = "<none>"
+"checksum twa_pack_lib 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)" = "0cb39d256624700bda7965aa8cb48089dc07c2c537379f906a44986adfbe9295"

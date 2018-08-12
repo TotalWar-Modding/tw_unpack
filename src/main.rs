@@ -13,7 +13,7 @@ use std::path::PathBuf;
 use getopts::Options;
 use glob::glob;
 
-static VERSION: &str = "0.1.3";
+static VERSION: &str = env!("CARGO_PKG_VERSION");
 
 struct Config {
     verbose: bool
