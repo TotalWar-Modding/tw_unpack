@@ -19,20 +19,31 @@ struct Config {
     verbose: bool
 }
 
-fn unpack_pack(pack_filename: &mut File, output_directory: &PathBuf, config: &Config) {
-    let mut buf = vec!();
-    pack_filename.read_to_end(&mut buf).unwrap();
-    let pack = twa_pack_lib::parse_pack(buf);
+fn unpack_pack(path: &PathBuf, output_directory: &PathBuf, config: &Config) {
+    match File::open(&path) {
+        Ok(mut pack_filename) => {
+            let mut buf = vec!();
+            pack_filename.read_to_end(&mut buf).unwrap();
+            let pack = twa_pack_lib::parse_pack(buf).unwrap();
+            println!("unpacking {}: {}", &path.display(), &pack);
 
-    for item in pack.into_iter() {
-        let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
-        let target_path = output_directory.join(&item.name);
-        std::fs::create_dir_all(target_directory).unwrap();
-        let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
-        if config.verbose {
-            println!("{}", &item);
-        }
-        file.write(item.content).unwrap();
+            for item in pack.into_iter() {
+                match item {
+                    Ok(item) => {
+                        let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
+                        let target_path = output_directory.join(&item.name);
+                        std::fs::create_dir_all(target_directory).unwrap();
+                        let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
+                        if config.verbose {
+                            println!("{}", &item);
+                        }
+                        file.write(item.content.as_ref()).unwrap();
+                    },
+                    Err(e) => println!("twa_pack_lib failed to fetch next file: {:?}", e)
+                }
+            }
+        },
+        Err(e) => panic!("Could not open file {} ({})", &path.display(), e)
     }
 }
 
@@ -100,13 +111,7 @@ fn main() {
             for entry in glob {
                 match entry {
                     Ok(path) => {
-                        match File::open(&path) {
-                            Ok(mut f) => {
-                                println!("unpacking {}", &path.display());
-                                unpack_pack(&mut f, &output_directory, &config)
-                            },
-                            Err(e) => panic!("fould not open file {} ({})", &path.display(), e)
-                        }
+                        unpack_pack(&path, &output_directory, &config)
                     }
                     Err(e) => println!("failed to handle glob entry ({})", e),
                 }

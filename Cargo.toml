@@ -4,6 +4,6 @@ version = "0.1.4"
 authors = ["Benedikt Constantin Radtke <benediktradtke@mailbox.tu-berlin.de>"]
 
 [dependencies]
-twa_pack_lib = "0.1"
+twa_pack_lib = "0.1.*"
 getopts = "0.2"
 glob = "0.2"
