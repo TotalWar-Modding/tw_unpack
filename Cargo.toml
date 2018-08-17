@@ -1,6 +1,6 @@
 [package]
 name = "twa_unpack"
-version = "0.1.7"
+version = "0.1.8"
 authors = ["Benedikt Constantin Radtke <benediktradtke@mailbox.tu-berlin.de>"]
 
 [dependencies]
