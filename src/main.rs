@@ -28,7 +28,6 @@ fn unpack_pack(path: &PathBuf, output_directory: &PathBuf, config: &Config) {
             println!("unpacking {}: {}", &path.display(), &pack);
 
             for item in pack.into_iter() {
-                println!("{}", item);
                 let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
                 let target_path = output_directory.join(&item.name);
                 std::fs::create_dir_all(target_directory).unwrap();
