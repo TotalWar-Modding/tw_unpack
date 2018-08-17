@@ -28,13 +28,13 @@ fn unpack_pack(path: &PathBuf, output_directory: &PathBuf, config: &Config) {
             println!("unpacking {}: {}", &path.display(), &pack);
 
             for item in pack.into_iter() {
+                if config.verbose {
+                    println!("{}", &item);
+                }
                 let target_directory = output_directory.join(&Path::new(&item.name).parent().unwrap());
                 let target_path = output_directory.join(&item.name);
                 std::fs::create_dir_all(target_directory).unwrap();
                 let mut file = OpenOptions::new().write(true).create(true).open(&target_path).unwrap();
-                if config.verbose {
-                    println!("{}", &item);
-                }
                 file.write(item.content.as_ref()).unwrap();
             }
         },
