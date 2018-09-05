@@ -1,9 +1,13 @@
 [package]
 name = "tw_unpack"
 version = "0.1.9"
-authors = ["Benedikt Constantin Radtke <benediktradtke@mailbox.tu-berlin.de>"]
+authors = ["Benedikt Constantin Radtke <benediktradtke@gmail.com>"]
+description = "A Total War series pack file unpacker"
+keywords = ["Total", "War", "pack", "unpack"]
+repository = "https://github.com/TotalWar-Modding/tw_unpack"
+license = "LGPL-3.0+"
 
 [dependencies]
-tw_pack_lib = "0.1.14"
+tw_pack_lib = "0.1.15"
 getopts = "0.2"
 glob = "0.2"
