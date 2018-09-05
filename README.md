@@ -1,9 +1,9 @@
 # twa_unpack
 
-An open-source Total War Arena .pack file unpacker.
+An open-source Total War .pack file unpacker.
 
 ```
-Usage: twa_unpack FILE
+Usage: tw_unpack FILE
 
 Options:
     -o OUTPUT           the output directory for the extracted files. If no

@@ -1,9 +1,9 @@
 [package]
-name = "twa_unpack"
-version = "0.1.8"
+name = "tw_unpack"
+version = "0.1.9"
 authors = ["Benedikt Constantin Radtke <benediktradtke@mailbox.tu-berlin.de>"]
 
 [dependencies]
-twa_pack_lib =  "0.1.7"
+tw_pack_lib = "0.1.14"
 getopts = "0.2"
 glob = "0.2"
