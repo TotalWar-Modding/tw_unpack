@@ -40,7 +40,7 @@ fn unpack_pack(path: &PathBuf, output_directory: &PathBuf, config: &Config) {
 }
 
 fn print_usage(program: &str, opts: Options) {
-    let brief = format!("twa_unpack version {}\nUsage: {} FILE", VERSION, program);
+    let brief = format!("tw_unpack version {}\nUsage: {} FILE", VERSION, program);
     println!("{}", opts.usage(&brief));
 }
 
@@ -48,7 +48,7 @@ fn main() {
     let args: Vec<String> = env::args().collect();
     let program = args[0].clone();
     let mut opts = Options::new();
-    opts.optopt("o", "", "the output directory for the extracted files. If no output directory is specified, twa_unpack will save the files in the current directory", "OUTPUT");
+    opts.optopt("o", "", "the output directory for the extracted files. If no output directory is specified, tw_unpack will save the files in the current directory", "OUTPUT");
     opts.optflag("v", "", "enable verbose logging");
 
     let matches = match opts.parse(&args[1..]) {
