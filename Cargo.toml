@@ -8,6 +8,6 @@ repository = "https://github.com/TotalWar-Modding/tw_unpack"
 license = "LGPL-3.0+"
 
 [dependencies]
-tw_pack_lib = "0.1.15"
+tw_pack_lib = "0.1.21"
 getopts = "0.2"
 glob = "0.2"
