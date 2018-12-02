@@ -1,6 +1,6 @@
 [package]
 name = "tw_unpack"
-version = "0.1.10"
+version = "0.1.11"
 authors = ["Benedikt Constantin Radtke <benediktradtke@gmail.com>"]
 description = "A Total War series pack file unpacker"
 keywords = ["Total", "War", "pack", "unpack"]
